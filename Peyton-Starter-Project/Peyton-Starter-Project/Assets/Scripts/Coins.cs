@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class Coins : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D col)
+    public AudioClip coinClip;
+
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        CoinCounter.coinAmount += 1;
-        Destroy(gameObject);
+        SlimeController slimy = other.GetComponent<SlimeController>();
+        {
+            CoinCounter.coinAmount += 1;
+            Destroy(gameObject);
+            slimy.PlaySound(coinClip);
+
+
+        }
     }
 }

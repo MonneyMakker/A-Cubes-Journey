@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public AudioClip healthClip;
     void OnTriggerEnter2D(Collider2D other)
     {
         SlimeController slimy = other.GetComponent<SlimeController>();
@@ -14,6 +15,9 @@ public class Health : MonoBehaviour
             {
                 slimy.ChangeHealth(1);
                 Destroy(gameObject);
+                slimy.PlaySound(healthClip);
+
+
             }
         }
     }

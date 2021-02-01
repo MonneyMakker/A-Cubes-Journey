@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class CoinCounter : MonoBehaviour
 {
     Text coin;
+
+    public static CoinCounter instance;
     public static int coinAmount;
     void Start()
     {

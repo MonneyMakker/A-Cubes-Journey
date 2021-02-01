@@ -6,7 +6,12 @@ using UnityEngine.SceneManagement;
 public class SlimeController : MonoBehaviour
 {
     public int Health = 3;
-    
+    AudioSource audioSource;
+    public AudioSource WinningMusic;
+    public bool WinningSong = false;
+
+
+
     public int health { get { return slimeHealth; }}
     int slimeHealth;
     Rigidbody2D rigidbody2d;
@@ -16,9 +21,28 @@ public class SlimeController : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         slimeHealth = Health;
+        audioSource = GetComponent<AudioSource>();
+        StartCoroutine(StopingObject());
     }
 
-    // Update is called once per frame
+    IEnumerator StopingObject()
+    {
+        SlimeController cc = GetComponent<SlimeController>();
+        cc.enabled = false;
+        yield return new WaitForSeconds(2);
+        cc.enabled = true;
+    }
+
+    public void PlaySound(AudioClip clip)
+{
+        audioSource.PlayOneShot(clip);
+    }
+    public void Music()
+    {
+        
+        WinningSong = false;
+       
+    }
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
@@ -28,9 +52,21 @@ public class SlimeController : MonoBehaviour
         {
             Debug.Log("You Have Died!");
             StartCoroutine("RestartScene");
+            CoinCounter.coinAmount = 0;
+        }
+        if (CoinCounter.coinAmount >= 5)
+        {
+            SlimeController cc = GetComponent<SlimeController>();
+            AudioSource background = gameObject.GetComponent<AudioSource>();
+            background.Stop();
+            cc.enabled = false;
+            WinningSong = true;
+            WinningMusic.Play();
+
         }
 
     }
+ 
     public IEnumerator RestartScene()
     {
         yield return new WaitForSeconds(0.5f);
