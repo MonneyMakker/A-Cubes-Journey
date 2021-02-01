@@ -36,7 +36,8 @@ IEnumerator Wait()
         timerText.text = "Timer: " + Mathf.Round(timer);
         if (timer >= 10)
         {
-        SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("SampleScene");
+            CoinCounter.coinAmount = 0;
         }
     }
 }
