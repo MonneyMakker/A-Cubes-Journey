@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TimerCounter : MonoBehaviour
 {
-    float timer = 0f;
+    public float timer = 0f;
     Text timerText;
 
     public static TimerCounter instance;
@@ -38,6 +38,7 @@ IEnumerator Wait()
         {
             SceneManager.LoadScene("SampleScene");
             CoinCounter.coinAmount = 0;
+        
         }
     }
 }

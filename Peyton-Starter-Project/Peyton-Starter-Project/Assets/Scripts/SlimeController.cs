@@ -10,13 +10,15 @@ public class SlimeController : MonoBehaviour
     public AudioSource WinningMusic;
     public bool WinningSong = false;
 
-
-
+    public GameObject winMenu;
+    public GameObject loseMenu;
     public int health { get { return slimeHealth; }}
     int slimeHealth;
     Rigidbody2D rigidbody2d;
+
     float horizontal;
     float vertical;
+
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -39,9 +41,7 @@ public class SlimeController : MonoBehaviour
     }
     public void Music()
     {
-        
         WinningSong = false;
-       
     }
     void Update()
     {
@@ -51,8 +51,14 @@ public class SlimeController : MonoBehaviour
         if (slimeHealth <= 0)
         {
             Debug.Log("You Have Died!");
-            StartCoroutine("RestartScene");
+            SlimeController cc = GetComponent<SlimeController>();
+            AudioSource background = gameObject.GetComponent<AudioSource>();
+            background.Stop();
+            cc.enabled = false;
+            loseMenu.SetActive(true);
+            Time.timeScale = 0f;
             CoinCounter.coinAmount = 0;
+
         }
         if (CoinCounter.coinAmount >= 5)
         {
@@ -62,16 +68,11 @@ public class SlimeController : MonoBehaviour
             cc.enabled = false;
             WinningSong = true;
             WinningMusic.Play();
-
+            winMenu.SetActive(true);
         }
 
     }
  
-    public IEnumerator RestartScene()
-    {
-        yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("SampleScene");
-    }
 
     
     void FixedUpdate()
