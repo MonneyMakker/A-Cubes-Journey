@@ -12,9 +12,15 @@ public class SlimeController : MonoBehaviour
 
     public GameObject winMenu;
     public GameObject loseMenu;
-    public int health { get { return slimeHealth; }}
+    public int health { get { return slimeHealth; } }
     int slimeHealth;
     Rigidbody2D rigidbody2d;
+
+    public GameObject heart1;
+
+    public float publicSpeed;
+    public GameObject heart2;
+    public GameObject heart3;
 
     float horizontal;
     float vertical;
@@ -36,19 +42,27 @@ public class SlimeController : MonoBehaviour
     }
 
     public void PlaySound(AudioClip clip)
-{
+    {
         audioSource.PlayOneShot(clip);
     }
     public void Music()
     {
         WinningSong = false;
     }
+
+    private void Awake()
+    {
+        heart1 = GameObject.Find("HeartContain1");
+        heart2 = GameObject.Find("HeartContain2");
+        heart3 = GameObject.Find("HeartContain3");
+    }
+
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
-        if (slimeHealth <= 0)
+        if (slimeHealth == 0)
         {
             Debug.Log("You Have Died!");
             SlimeController cc = GetComponent<SlimeController>();
@@ -70,11 +84,33 @@ public class SlimeController : MonoBehaviour
             WinningMusic.Play();
             winMenu.SetActive(true);
         }
+        if (health == 0)
+        {
+            heart1.SetActive(false);
+            heart2.SetActive(false);
+            heart3.SetActive(false);
+        }
+        if (health == 1)
+        {
+            heart3.SetActive(false);
+            heart2.SetActive(false);
+            heart1.SetActive(true);
+        }
+        if (health == 2)
+        {
+            heart3.SetActive(false);
+            heart2.SetActive(true);
+            heart1.SetActive(true);
+        }
+        if (health == 3)
+        {
+            heart3.SetActive(true);
+            heart2.SetActive(true);
+            heart1.SetActive(true);
+        }
+}
 
-    }
  
-
-    
     void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
