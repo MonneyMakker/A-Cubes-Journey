@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ public class Damage : MonoBehaviour
 
         if (slimy != null)
         {
-            slimy.ChangeHealth(-1);
+            slimy.ChangeHealth(1);
             slimy.PlaySound(ouchClip);
         }
     }
