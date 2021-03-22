@@ -11,11 +11,12 @@ public class Coins : MonoBehaviour
     {
         SlimeController slimy = other.GetComponent<SlimeController>();
         {
-            CoinCounter.coinAmount += 1;
-            Destroy(gameObject);
-            slimy.PlaySound(coinClip);
-
-
+            if (slimy != null)
+            {
+                CoinCounter.coinAmount += 1;
+                Destroy(gameObject);
+                slimy.PlaySound(coinClip);
+            }
         }
     }
 }
