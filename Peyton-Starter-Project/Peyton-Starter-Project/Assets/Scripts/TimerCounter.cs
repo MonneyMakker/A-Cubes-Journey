@@ -13,7 +13,7 @@ public class TimerCounter : MonoBehaviour
     void Start()
     {
         StartCoroutine(Wait());
-        timerText = gameObject.GetComponent<Text > ();
+        timerText = gameObject.GetComponent<Text> ();
     }
 
     // Update is called once per frame

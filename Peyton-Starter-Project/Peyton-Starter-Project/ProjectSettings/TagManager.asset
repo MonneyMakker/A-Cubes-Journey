@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - ground
+  - Ammo
+  - Coins
+  - Death
+  - Spikes
+  - Health
   layers:
   - Default
   - TransparentFX

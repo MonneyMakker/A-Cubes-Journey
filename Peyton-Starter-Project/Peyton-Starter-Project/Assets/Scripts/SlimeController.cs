@@ -1,21 +1,18 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SlimeController : MonoBehaviour
 {
-    public int Health = 5;
+    public static int health;
     AudioSource audioSource;
-    public AudioClip dashSound;
-    public AudioClip jumpSound;
-    public AudioClip chargeSound;
     public AudioSource WinningMusic;
+    public AudioClip coinClip, hurtClip, healthClip, jumpSound, dashSound,shootingClip,chargeSound;
     public bool WinningSong = false;
     public GameObject winMenu;
     public GameObject loseMenu;
-    public int health { get { return slimeHealth; } }
-    int slimeHealth;
     Rigidbody2D rb;
     public float Speed;
     public float JumpForce;
@@ -24,26 +21,28 @@ public class SlimeController : MonoBehaviour
     public float StartDashTimer;
     float CurrentDashTimer;
     bool isDashing;
+    private bool facingRight;
     public float cooldownTime = 2.5f;
     private float nextFireTime = 0;
     float DashDirection;
+    public Transform firePoint;
+    float movX;
+    public GameObject bullet;
     public GameObject heart1, heart2, heart3, heart4, heart5, staminaBar;
     public ParticleSystem Particeles;
+    public int maxAmmo = 10;
+    public int ammo;
+    public bool isFiring;
+    public Text ammoDisplay;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        slimeHealth = Health;
+        health = 5;
         audioSource = GetComponent<AudioSource>();
-        StartCoroutine(StopingObject());
+        facingRight = true;
+        ammo = maxAmmo;
     }
 
-    IEnumerator StopingObject()
-    {
-        SlimeController cc = GetComponent<SlimeController>();
-        cc.enabled = false;
-        yield return new WaitForSeconds(2);
-        cc.enabled = true;
-    }
 
     public void PlaySound(AudioClip clip)
     {
@@ -63,11 +62,22 @@ public class SlimeController : MonoBehaviour
         heart5 = GameObject.Find("HeartContain5");
         staminaBar = GameObject.Find("DashBar");
     }
-
+    private void Flip(float movX)
+    {
+        if (movX > 0 && !facingRight || movX < 0 && facingRight)
+        {
+            facingRight = !facingRight;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+            firePoint.Rotate(0, 180f, 0);
+        }
+    }
     void Update()
     {
-        float movX = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(movX * Speed, rb.velocity.y);
+        float movX = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector3(movX * Speed, rb.velocity.y);
+        Flip(movX);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -83,7 +93,7 @@ public class SlimeController : MonoBehaviour
             {
                 isDashing = true;
                 CurrentDashTimer = StartDashTimer;
-                rb.velocity = Vector2.zero;
+                rb.velocity = Vector3.zero;
                 DashDirection = (int)movX;
                 Particeles.Play();
                 Debug.Log("ability used");
@@ -103,7 +113,7 @@ public class SlimeController : MonoBehaviour
                 }
             }
         }
-        if (slimeHealth == 0)
+        if (health == 0)
         {
             Debug.Log("You Have Died!");
             SlimeController cc = GetComponent<SlimeController>();
@@ -174,7 +184,17 @@ public class SlimeController : MonoBehaviour
             heart2.SetActive(true);
             heart1.SetActive(true);
         }
-}
+        if (Input.GetMouseButtonDown(2) && !isFiring && ammo > 0)
+        {
+            Instantiate(bullet, firePoint.position, firePoint.rotation);
+            PlaySound(shootingClip);
+            Debug.Log("Firing");
+            isFiring = true;
+            ammo--;
+            isFiring = false;
+            ammoDisplay.text = ammo.ToString();
+        }
+    }
 
     IEnumerator Dash()
     {
@@ -192,21 +212,45 @@ public class SlimeController : MonoBehaviour
         isGrounded = false;
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+            if (collision.gameObject.tag == "Ammo")
+            {
+                ammo = maxAmmo;
+                Destroy(collision.gameObject);
+                ammoDisplay.text = ammo.ToString();
+                PlaySound(coinClip);
+            }
+            if (collision.gameObject.tag == "Coins")
+            {
+                CoinCounter.coinAmount += 1;
+                Destroy(collision.gameObject);
+                PlaySound(coinClip);
+            }
+            if (collision.gameObject.tag == "Health")
+            {
+            if (health < 5)
+                {
+                health += 1;
+                Destroy(collision.gameObject);
+                PlaySound(healthClip);
+            }
+            }
+            if (collision.gameObject.tag =="Spikes")
+            {
+                health -= 1;
+                PlaySound(hurtClip);
+             }
+        }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "ground")
         {
-            isGrounded = true;
+             isGrounded = true;
         }
-    }
-
-    public void ChangeHealth(int amount)
-    {
-        slimeHealth = Mathf.Clamp(slimeHealth + amount, 0, Health);
-        Debug.Log(slimeHealth + "/" + Health);
-    }
-    private void Flip()
-    {
-
+        if(collision.gameObject.tag == "Death")
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
     }
 }
