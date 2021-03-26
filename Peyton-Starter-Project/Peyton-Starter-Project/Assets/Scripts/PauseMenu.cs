@@ -12,6 +12,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject player;
 
     public GameObject pause;
+    public AudioSource audioSource;
+    public AudioSource pauseMusic;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -33,6 +35,8 @@ public class PauseMenu : MonoBehaviour
         GamePaused = false;
         player.SetActive(true);
         pause.SetActive(true);
+        audioSource.Play();
+        pauseMusic.Stop();
     }
     public void PauseGame()
     {
@@ -40,6 +44,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GamePaused = true;
         player.SetActive(false);
+        audioSource.Pause();
+        pauseMusic.Play();
     }
     public void LoadMainMenu(string MainMenu)
     {

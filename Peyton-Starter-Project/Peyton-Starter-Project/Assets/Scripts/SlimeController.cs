@@ -31,6 +31,8 @@ public class SlimeController : MonoBehaviour
     private float nextFireTime = 0;
     float DashDirection;
     public Transform firePoint;
+    public Transform particlePoint;
+    public Transform jumpPoint;
     float movX;
     public GameObject bullet;
     public GameObject heart1, heart2, heart3, heart4, heart5, staminaBar;
@@ -44,6 +46,7 @@ public class SlimeController : MonoBehaviour
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
     public Camera mainCamera;
+    float movY;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -83,12 +86,16 @@ public class SlimeController : MonoBehaviour
             theScale.x *= -1;
             transform.localScale = theScale;
             firePoint.Rotate(0, 180f, 0);
+            particlePoint.Rotate(0, 180f, 0);
+            jumpPoint.Rotate(0, 180f, 0);
         }
     }
     void Update()
     {
         float movX = Input.GetAxisRaw("Horizontal");
+        float movY = Input.GetAxis("Vertical");
         rb.velocity = new Vector3(movX * Speed, rb.velocity.y);
+
         Flip(movX);
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -138,17 +145,17 @@ public class SlimeController : MonoBehaviour
                 }
             }
         }
-        if (currentStamina > 0.40)
+        if (currentStamina > 1)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                UseStamina(0.40f);
+                UseStamina(0.99f);
                 Speed = 12f;
             }
             else
                 Speed = 7f;
         }
-        else if (currentStamina < 0.40)
+        else if (currentStamina < 1)
         {
             staminaBarShift.value = currentStamina;
             Speed = 7f;
@@ -326,7 +333,7 @@ public class SlimeController : MonoBehaviour
         if(collision.gameObject.tag == "ground")
         {
              isGrounded = true;
-             Instantiate(dustCloud, transform.position, dustCloud.transform.rotation);
+             Instantiate(dustCloud, jumpPoint.transform.position, dustCloud.transform.rotation);
              coroutineAllowed = true;
         }
         if(collision.gameObject.tag == "Death")
@@ -347,7 +354,7 @@ public class SlimeController : MonoBehaviour
     {
         while (isGrounded)
         {
-            Instantiate(dustCloud, transform.position, dustCloud.transform.rotation);
+            Instantiate(dustCloud, particlePoint.transform.position, transform.rotation);
             yield return new WaitForSeconds(0.10f);
         }
     }
