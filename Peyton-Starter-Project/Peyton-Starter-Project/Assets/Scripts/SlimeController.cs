@@ -7,16 +7,21 @@ using UnityEngine.UI;
 public class SlimeController : MonoBehaviour
 {
     public static int health;
+    public Slider staminaBarShift;
+    public int maxStamina = 100;
+    private float currentStamina;
+    private Coroutine regen;
     AudioSource audioSource;
     public AudioSource WinningMusic;
-    public AudioClip coinClip, hurtClip, healthClip, jumpSound, dashSound,shootingClip,chargeSound;
+    public AudioClip coinClip, hurtClip, healthClip, jumpSound, 
+    dashSound,shootingClip,chargeSound,loseClip;
     public bool WinningSong = false;
     public GameObject winMenu;
     public GameObject loseMenu;
     Rigidbody2D rb;
     public float Speed;
     public float JumpForce;
-    bool isGrounded = false;
+    bool coroutineAllowed, isGrounded = false;
     public float DashForce;
     public float StartDashTimer;
     float CurrentDashTimer;
@@ -34,6 +39,11 @@ public class SlimeController : MonoBehaviour
     public int ammo;
     public bool isFiring;
     public Text ammoDisplay;
+    public GameObject Audio;
+    public GameObject dustCloud;
+    Vector3 cameraInitialPosition;
+    public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
+    public Camera mainCamera;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,9 +51,11 @@ public class SlimeController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         facingRight = true;
         ammo = maxAmmo;
+        currentStamina = maxStamina;
+        staminaBarShift.maxValue = maxStamina;
+        staminaBarShift.value = maxStamina;
+
     }
-
-
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
@@ -86,6 +98,16 @@ public class SlimeController : MonoBehaviour
                 Jump();
             }
         }
+        if (isGrounded && movX !=0 && coroutineAllowed)
+        {
+            StartCoroutine("SpawnCloud");
+            coroutineAllowed = false;
+        }
+        if (movX == 0 && isGrounded)
+        {
+            StopCoroutine("SpawnCloud");
+            coroutineAllowed = true;
+        }
 
         if (Time.time > nextFireTime)
         {
@@ -105,6 +127,9 @@ public class SlimeController : MonoBehaviour
             {
                 rb.velocity = transform.right * DashDirection * DashForce;
                 CurrentDashTimer -= Time.deltaTime;
+                cameraInitialPosition = mainCamera.transform.position;
+                InvokeRepeating("StartCameraShaking", 0f, 0.0005f);
+                Invoke("StopCameraShaking", shakeTime);
 
                 if (CurrentDashTimer <= 0)
                 {
@@ -113,13 +138,29 @@ public class SlimeController : MonoBehaviour
                 }
             }
         }
+        if (currentStamina > 0.40)
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                UseStamina(0.40f);
+                Speed = 12f;
+            }
+            else
+                Speed = 7f;
+        }
+        else if (currentStamina < 0.40)
+        {
+            staminaBarShift.value = currentStamina;
+            Speed = 7f;
+        }
+        
         if (health == 0)
         {
             Debug.Log("You Have Died!");
             SlimeController cc = GetComponent<SlimeController>();
-            AudioSource background = gameObject.GetComponent<AudioSource>();
-            background.Stop();
+            PlaySound(loseClip);
             cc.enabled = false;
+            Audio.SetActive(false);
             loseMenu.SetActive(true);
             Time.timeScale = 0f;
             CoinCounter.coinAmount = 0;
@@ -128,10 +169,9 @@ public class SlimeController : MonoBehaviour
         if (CoinCounter.coinAmount >= 5)
         {
             SlimeController cc = GetComponent<SlimeController>();
-            AudioSource background = gameObject.GetComponent<AudioSource>();
-            background.Stop();
             cc.enabled = false;
             WinningSong = true;
+            Audio.SetActive(false);
             WinningMusic.Play();
             winMenu.SetActive(true);
             Time.timeScale = 0f;
@@ -195,6 +235,45 @@ public class SlimeController : MonoBehaviour
             ammoDisplay.text = ammo.ToString();
         }
     }
+    public void UseStamina(float amount)
+    {
+        if(currentStamina - amount>=0)
+        {
+            currentStamina -= amount;
+            staminaBarShift.value = currentStamina;
+
+            if(regen !=null)
+            {
+                StopCoroutine(regen);
+            }
+            regen = StartCoroutine(RegenStamina());
+        }
+    }
+    private IEnumerator RegenStamina()
+    {
+        yield return new WaitForSeconds(0.05f);
+
+        while (currentStamina < maxStamina)
+        {
+            currentStamina += maxStamina / 100;
+            staminaBarShift.value = currentStamina;
+            yield return new WaitForSeconds(0.03f);
+        }
+    }
+    void StartCameraShaking()
+    {
+        float cameraShakingX = Random.value * shakeMagnitude * 2 - shakeMagnitude;
+        float cameraShakingY = Random.value * shakeMagnitude * 2 - shakeMagnitude;
+        Vector3 cameraposition = mainCamera.transform.position;
+        cameraposition.x += cameraShakingX;
+        cameraposition.y += cameraShakingY;
+        mainCamera.transform.position = cameraposition;
+    }
+    void StopCameraShaking()
+    {
+        CancelInvoke("StartCameraShaking");
+        mainCamera.transform.position = cameraInitialPosition;
+    }
 
     IEnumerator Dash()
     {
@@ -247,10 +326,29 @@ public class SlimeController : MonoBehaviour
         if(collision.gameObject.tag == "ground")
         {
              isGrounded = true;
+             Instantiate(dustCloud, transform.position, dustCloud.transform.rotation);
+             coroutineAllowed = true;
         }
         if(collision.gameObject.tag == "Death")
         {
+            CoinCounter.coinAmount = 0;
             SceneManager.LoadScene("SampleScene");
+        }
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "ground")
+    {
+            isGrounded = false;
+            coroutineAllowed = false;
+        }
+    }
+    IEnumerator SpawnCloud()
+    {
+        while (isGrounded)
+        {
+            Instantiate(dustCloud, transform.position, dustCloud.transform.rotation);
+            yield return new WaitForSeconds(0.10f);
         }
     }
 }
