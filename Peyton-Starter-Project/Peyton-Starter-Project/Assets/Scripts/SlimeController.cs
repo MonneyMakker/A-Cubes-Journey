@@ -40,6 +40,7 @@ public class SlimeController : MonoBehaviour
     public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition;
     public ParticleSystem Particles;
     public ParticleSystem particlesJump;
+    public ParticleSystem particlesDeath;
     public int maxAmmo = 10;
     public int ammo;
     public bool isFiring;
@@ -51,6 +52,7 @@ public class SlimeController : MonoBehaviour
     public Camera mainCamera;
     bool isMoving;
     bool Dashing;
+    private Animator animator;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -65,6 +67,7 @@ public class SlimeController : MonoBehaviour
         staminaBarShift.value = maxStamina;
         Transition.SetActive(false);
         isDashing = false;
+        animator = GetComponent<Animator>();
     }
     public void PlaySound(AudioClip clip)
     {
@@ -139,6 +142,20 @@ public class SlimeController : MonoBehaviour
             StopCoroutine("SpawnCloud");
             coroutineAllowed = true;
         }
+
+        if(movX == 0 && isGrounded == true)
+        {
+            animator.SetBool("isIdle", true);
+        }
+        else
+            animator.SetBool("isIdle", false);
+
+        if(movX !=0 && isGrounded == true)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+            animator.SetBool("isWalking", false);
 
         if (Time.time > nextFireTime)
         {
@@ -360,11 +377,15 @@ public class SlimeController : MonoBehaviour
             }
             if (collision.gameObject.tag == "Spikes")
             {
-                SlimeController cc = GetComponent<SlimeController>();
-                cc.enabled = false;
-                health -= 1;
-                PlaySound(hurtClip);
-                StartCoroutine("WaitforDeath");
+            gameObject.GetComponent<Renderer>().enabled = false;
+            animator.SetTrigger("isDead");
+            dustCloud.SetActive(false);
+            particlesDeath.Play();
+            SlimeController cc = GetComponent<SlimeController>();
+            cc.enabled = false;
+            health -= 1;
+            PlaySound(hurtClip);
+            StartCoroutine("WaitforDeath");
         }
         if(collision.gameObject.tag =="Transition")
         {
@@ -376,8 +397,10 @@ public class SlimeController : MonoBehaviour
         IEnumerator WaitforDeath()
     {
         rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1.5f);
+        gameObject.GetComponent<Renderer>().enabled = true;
         Transition.SetActive(true);
+        dustCloud.SetActive(true);
         transform.position = spawnPoint.transform.position;
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -390,13 +413,16 @@ public class SlimeController : MonoBehaviour
         }
         if(collision.gameObject.tag == "Death")
         {
+            animator.SetTrigger("isDead");
+            gameObject.GetComponent<Renderer>().enabled = false;
+            particlesDeath.Play();
+            Particles.Stop();
             health -= 1;
+            Speed = 0;
             PlaySound(hurtClip);
-            transform.position = spawnPoint.transform.position;
-            Transition.SetActive(true);
-            rb.velocity = Vector2.zero;
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = false;
+            StartCoroutine("WaitforDeath");
         }
     }
     void OnCollisionExit2D(Collision2D collision)
