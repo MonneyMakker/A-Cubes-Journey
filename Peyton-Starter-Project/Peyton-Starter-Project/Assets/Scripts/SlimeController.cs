@@ -64,6 +64,7 @@ public class SlimeController : MonoBehaviour
         staminaBarShift.maxValue = maxStamina;
         staminaBarShift.value = maxStamina;
         Transition.SetActive(false);
+        isDashing = false;
     }
     public void PlaySound(AudioClip clip)
     {
@@ -73,7 +74,6 @@ public class SlimeController : MonoBehaviour
     {
         WinningSong = false;
     }
-
     private void Awake()
     {
         heart1 = GameObject.Find("HeartContain1");
@@ -142,7 +142,7 @@ public class SlimeController : MonoBehaviour
 
         if (Time.time > nextFireTime)
         {
-            if (Input.GetMouseButtonDown(1) && movX != 0)
+            if (Input.GetMouseButtonDown(1) && movX != 0 && isDashing == false)
             {
                 isDashing = true;
                 CurrentDashTimer = StartDashTimer;
@@ -161,6 +161,7 @@ public class SlimeController : MonoBehaviour
                 cameraInitialPosition = mainCamera.transform.position;
                 InvokeRepeating("StartCameraShaking", 0f, 0.0005f);
                 Invoke("StopCameraShaking", shakeTime);
+        
 
                 if (CurrentDashTimer <= 0)
                 {
@@ -374,6 +375,7 @@ public class SlimeController : MonoBehaviour
         }
         IEnumerator WaitforDeath()
     {
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.25f);
         Transition.SetActive(true);
         transform.position = spawnPoint.transform.position;
@@ -392,6 +394,7 @@ public class SlimeController : MonoBehaviour
             PlaySound(hurtClip);
             transform.position = spawnPoint.transform.position;
             Transition.SetActive(true);
+            rb.velocity = Vector2.zero;
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = false;
         }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5832778487703504705}
   - component: {fileID: 5763080644192947562}
   - component: {fileID: 5472512552063294264}
+  - component: {fileID: 1649462308}
   m_Layer: 0
   m_Name: Moving Spikes
   m_TagString: Spikes
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 723fe243ea20b804ba8f6ad7ed1210a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -216,3 +217,19 @@ PolygonCollider2D:
       - {x: 0.67071027, y: 0.08820077}
       - {x: 0.6661452, y: 0.31932598}
       - {x: 0.29267743, y: 0.97766495}
+--- !u!111 &1649462308
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5832778487703504735}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 25bff13064709fb4781995f0db0e1463, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 25bff13064709fb4781995f0db0e1463, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
