@@ -14,6 +14,13 @@ public class PauseMenu : MonoBehaviour
     public GameObject pause;
     public AudioSource audioSource;
     public AudioSource pauseMusic;
+
+
+    void Start()
+    {
+    
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

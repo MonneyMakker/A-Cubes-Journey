@@ -9,14 +9,15 @@ public class SlimeController : MonoBehaviour
     public static int health;
     public Slider staminaBarShift;
     public int maxStamina = 100;
-    private static float currentStamina;
+    [SerializeField] float currentStamina;
     private Coroutine regen;
     AudioSource audioSource;
     public AudioSource WinningMusic;
-    public AudioClip coinClip, hurtClip, healthClip, jumpSound,
+    public AudioClip coinClip, hurtClip, healthClip, jumpSound, transitionSound, startSound,
     dashSound, shootingClip;
     public bool WinningSong = false;
     public AudioSource moving;
+    public AudioSource backgroundMusic;
     public GameObject winMenu;
     public GameObject loseMenu;
     Rigidbody2D rb;
@@ -29,6 +30,7 @@ public class SlimeController : MonoBehaviour
     float CurrentDashTimer;
     bool isDashing;
     private bool facingRight;
+    private bool jumpAllowed;
     public float cooldownTime = 1.5f;
     private float nextFireTime = 0;
     float DashDirection;
@@ -59,8 +61,6 @@ public class SlimeController : MonoBehaviour
         health = 5;
         audioSource = GetComponent<AudioSource>();
         facingRight = true;
-        SlimeController cc = GetComponent<SlimeController>();
-        cc.enabled = false;
         ammo = maxAmmo;
         currentStamina = maxStamina;
         staminaBarShift.maxValue = maxStamina;
@@ -68,6 +68,17 @@ public class SlimeController : MonoBehaviour
         Transition.SetActive(false);
         isDashing = false;
         animator = GetComponent<Animator>();
+        PlaySound(startSound);
+        Time.timeScale = 1;
+        StartCoroutine("Wait");
+        
+
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2.0f);
+        SlimeController cc = GetComponent<SlimeController>();
     }
     public void PlaySound(AudioClip clip)
     {
@@ -109,6 +120,7 @@ public class SlimeController : MonoBehaviour
         Flip(movX);
             if(isGrounded == true)
             {
+            jumpAllowed = true;
             doubleJumpAllowed = true;
             JumpIcon.SetActive(true);
             }
@@ -150,12 +162,36 @@ public class SlimeController : MonoBehaviour
         else
             animator.SetBool("isIdle", false);
 
-        if(movX !=0 && isGrounded == true)
+        if(movX !=0 && isGrounded == true && Speed == 7)
         {
             animator.SetBool("isWalking", true);
         }
         else
             animator.SetBool("isWalking", false);
+        if(Speed == 12 && movX !=0 && isGrounded == true)
+        {
+            animator.SetBool("isShifting", true);
+        }
+        else
+            animator.SetBool("isShifting", false);
+        if(isDashing == true && movX !=0)
+        {
+            animator.SetBool("isDashing", true);
+        }
+        else 
+            animator.SetBool("isDashing", false);
+        if (jumpAllowed == true && isGrounded == false && doubleJumpAllowed == true && Input.GetKeyDown(KeyCode.Space))
+            animator.SetBool("isJumping", true);
+        else
+        {
+            animator.SetBool("isJumping", false);
+        }
+        if(doubleJumpAllowed == false && Input.GetKeyDown(KeyCode.Space) && isGrounded == false)
+        {
+            animator.SetBool("isDoubleJumping", true);
+        }
+        else
+            animator.SetBool("isDoubleJumping", false);
 
         if (Time.time > nextFireTime)
         {
@@ -213,7 +249,9 @@ public class SlimeController : MonoBehaviour
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = false;
             CoinCounter.coinAmount = 0;
-            SceneManager.LoadScene("SampleScene");
+            Time.timeScale = 0;
+            backgroundMusic.Pause();
+            loseMenu.SetActive(true);
         }
 
         if (CoinCounter.coinAmount >= 5)
@@ -386,7 +424,7 @@ public class SlimeController : MonoBehaviour
             health -= 1;
             PlaySound(hurtClip);
             StartCoroutine("WaitforDeath");
-        }
+            }
         if(collision.gameObject.tag =="Transition")
         {
             Transition.SetActive(false);
@@ -398,10 +436,18 @@ public class SlimeController : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1.5f);
+        currentStamina = maxStamina;
+        staminaBarShift.value = currentStamina;
         gameObject.GetComponent<Renderer>().enabled = true;
         Transition.SetActive(true);
+        PlaySound(transitionSound);
         dustCloud.SetActive(true);
         transform.position = spawnPoint.transform.position;
+        if(health == 0 )
+            {
+                loseMenu.SetActive(true);
+                backgroundMusic.Pause();
+            }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
