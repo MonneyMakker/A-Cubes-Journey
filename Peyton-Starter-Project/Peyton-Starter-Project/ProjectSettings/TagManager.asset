@@ -11,6 +11,11 @@ TagManager:
   - Spikes
   - Health
   - Transition
+  - keys
+  - keys2
+  - keys3
+  - keys4
+  - keys5
   layers:
   - Default
   - TransparentFX
@@ -21,8 +26,8 @@ TagManager:
   - 
   - 
   - Background
-  - 
-  - 
+  - JumpingPlatforms
+  - Player
   - 
   - 
   - 

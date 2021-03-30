@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SlimeController : MonoBehaviour
 {
     public static int health;
+    private int key, key2, key3, key4, key5;    
     public Slider staminaBarShift;
     public int maxStamina = 100;
     [SerializeField] float currentStamina;
@@ -17,7 +18,7 @@ public class SlimeController : MonoBehaviour
     dashSound, shootingClip;
     public bool WinningSong = false;
     public AudioSource moving;
-    public AudioSource backgroundMusic;
+    public AudioSource backgroundMusic, oceanMusic;
     public GameObject winMenu;
     public GameObject loseMenu;
     Rigidbody2D rb;
@@ -39,7 +40,7 @@ public class SlimeController : MonoBehaviour
     public Transform jumpPoint;
     public Transform spawnPoint;
     public GameObject bullet;
-    public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition;
+    public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition, keys1, keys2, keys3, keys4, keys5;
     public ParticleSystem Particles;
     public ParticleSystem particlesJump;
     public ParticleSystem particlesDeath;
@@ -71,8 +72,11 @@ public class SlimeController : MonoBehaviour
         PlaySound(startSound);
         Time.timeScale = 1;
         StartCoroutine("Wait");
-        
-
+        key = 0;
+        key2 = 0;
+        key3 = 0;
+        key4 = 0;
+        key5 = 0;
     }
 
     IEnumerator Wait()
@@ -98,6 +102,11 @@ public class SlimeController : MonoBehaviour
         dashIcon = GameObject.Find("DashIcon");
         JumpIcon = GameObject.Find("JumpIcon");
         Transition = GameObject.Find("Object");
+        keys1 = GameObject.Find("KeyPickup1");
+        keys2 = GameObject.Find("KeyPickup2");
+        keys3 = GameObject.Find("KeyPickup3");
+        keys4 = GameObject.Find("KeyPickup4");
+        keys5 = GameObject.Find("KeyPickup5");
     }
     private void Flip(float movX)
     {
@@ -214,8 +223,6 @@ public class SlimeController : MonoBehaviour
                 cameraInitialPosition = mainCamera.transform.position;
                 InvokeRepeating("StartCameraShaking", 0f, 0.0005f);
                 Invoke("StopCameraShaking", shakeTime);
-        
-
                 if (CurrentDashTimer <= 0)
                 {
                     isDashing = false;
@@ -223,7 +230,6 @@ public class SlimeController : MonoBehaviour
                 }
 
             }
-
         }
         if (currentStamina > 0.40f)
         {
@@ -242,19 +248,50 @@ public class SlimeController : MonoBehaviour
             staminaBarShift.value = currentStamina;
             Speed = 7f;
         }
+
+        if(key == 1)
+        {
+            keys1.SetActive(true);
+        }
+        else
+            keys1.SetActive(false);
+        if(key2 ==1)
+        {
+            keys2.SetActive(true);
+        }
+        else
+            keys2.SetActive(false);
+        if(key3 == 1)
+        {
+            keys3.SetActive(true);
+        }
+        else
+            keys3.SetActive(false);
+        if(key4 == 1)
+        {
+            keys4.SetActive(true);
+        }
+        else
+            keys4.SetActive(false);
+         if(key5 == 1)
+        {
+            keys5.SetActive(true);
+        }
+        else
+            keys5.SetActive(false);
         
         if (health == 0)
         {
             Debug.Log("You Have Died!");
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = false;
-            CoinCounter.coinAmount = 0;
             Time.timeScale = 0;
             backgroundMusic.Pause();
+            oceanMusic.Pause();
             loseMenu.SetActive(true);
         }
 
-        if (CoinCounter.coinAmount >= 5)
+        if (key ==1 && key2 == 1 && key3 == 1 && key4 == 1 && key5 == 1)
         {
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = false;
@@ -398,12 +435,6 @@ public class SlimeController : MonoBehaviour
                 ammoDisplay.text = ammo.ToString();
                 PlaySound(coinClip);
             }
-            if (collision.gameObject.tag == "Coins")
-            {
-                CoinCounter.coinAmount += 1;
-                Destroy(collision.gameObject);
-                PlaySound(coinClip);
-            }
             if (collision.gameObject.tag == "Health")
             {
             if (health < 5)
@@ -412,6 +443,46 @@ public class SlimeController : MonoBehaviour
                 Destroy(collision.gameObject);
                 PlaySound(healthClip);
             }
+            }
+            if(collision.gameObject.tag  == "keys")
+            {
+                if(key < 1)
+                {
+                key += 1;
+                Destroy(collision.gameObject);
+                }
+            }
+            if(collision.gameObject.tag  == "keys2")
+            {
+                if(key2 < 1)
+                {
+                key2 += 1;
+                Destroy(collision.gameObject);
+                }
+            }
+            if(collision.gameObject.tag  == "keys3")
+            {
+                if(key3 < 1)
+                {
+                key3 += 1;
+                Destroy(collision.gameObject);
+                }
+            }
+            if(collision.gameObject.tag  == "keys4")
+            {
+                if(key4 < 1)
+                {
+                key4 += 1;
+                Destroy(collision.gameObject);
+                }
+            }
+            if(collision.gameObject.tag  == "keys5")
+            {
+                if(key5 < 1)
+                {
+                key5 += 1;
+                Destroy(collision.gameObject);
+                }
             }
             if (collision.gameObject.tag == "Spikes")
             {
@@ -435,7 +506,7 @@ public class SlimeController : MonoBehaviour
         IEnumerator WaitforDeath()
     {
         rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
         currentStamina = maxStamina;
         staminaBarShift.value = currentStamina;
         gameObject.GetComponent<Renderer>().enabled = true;
