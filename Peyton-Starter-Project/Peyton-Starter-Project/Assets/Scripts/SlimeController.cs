@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class SlimeController : MonoBehaviour
 {
@@ -13,12 +14,10 @@ public class SlimeController : MonoBehaviour
     [SerializeField] float currentStamina;
     private Coroutine regen;
     AudioSource audioSource;
-    public AudioSource WinningMusic;
     public AudioClip coinClip, hurtClip, healthClip, jumpSound, transitionSound, startSound,
     dashSound, shootingClip;
-    public bool WinningSong = false;
     public AudioSource moving;
-    public AudioSource backgroundMusic, oceanMusic;
+    public AudioSource backgroundMusic, oceanMusic, rainMusic;
     public GameObject winMenu;
     public GameObject loseMenu;
     Rigidbody2D rb;
@@ -40,7 +39,8 @@ public class SlimeController : MonoBehaviour
     public Transform jumpPoint;
     public Transform spawnPoint;
     public GameObject bullet;
-    public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition, keys1, keys2, keys3, keys4, keys5;
+    public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition, keys1, keys2, keys3, keys4, keys5, 
+    endingTransition;
     public ParticleSystem Particles;
     public ParticleSystem particlesJump;
     public ParticleSystem particlesDeath;
@@ -48,7 +48,6 @@ public class SlimeController : MonoBehaviour
     public int ammo;
     public bool isFiring;
     public Text ammoDisplay;
-    public GameObject Audio;
     public GameObject dustCloud;
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
@@ -56,6 +55,8 @@ public class SlimeController : MonoBehaviour
     bool isMoving;
     bool Dashing;
     private Animator animator;
+    bool isSprinting;
+    public TMP_Text exitTip;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -67,32 +68,23 @@ public class SlimeController : MonoBehaviour
         staminaBarShift.maxValue = maxStamina;
         staminaBarShift.value = maxStamina;
         Transition.SetActive(false);
+        endingTransition.SetActive(false);
         isDashing = false;
         animator = GetComponent<Animator>();
         PlaySound(startSound);
         Time.timeScale = 1;
-        StartCoroutine("Wait");
         key = 0;
         key2 = 0;
         key3 = 0;
         key4 = 0;
         key5 = 0;
+        exitTip.text = "";
     }
-
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2.0f);
-        SlimeController cc = GetComponent<SlimeController>();
-    }
-    public void PlaySound(AudioClip clip)
+        public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
     }
-    public void Music()
-    {
-        WinningSong = false;
-    }
-    private void Awake()
+        private void Awake()
     {
         heart1 = GameObject.Find("HeartContain1");
         heart2 = GameObject.Find("HeartContain2");
@@ -102,6 +94,7 @@ public class SlimeController : MonoBehaviour
         dashIcon = GameObject.Find("DashIcon");
         JumpIcon = GameObject.Find("JumpIcon");
         Transition = GameObject.Find("Object");
+        endingTransition = GameObject.Find("EndingTransition");
         keys1 = GameObject.Find("KeyPickup1");
         keys2 = GameObject.Find("KeyPickup2");
         keys3 = GameObject.Find("KeyPickup3");
@@ -233,7 +226,8 @@ public class SlimeController : MonoBehaviour
         }
         if (currentStamina > 0.40f)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            isSprinting = true;
+            if (Input.GetKey(KeyCode.LeftShift) && isSprinting == true)
             {
                 UseStamina(0.40f);
                 Speed = 12f;
@@ -243,10 +237,11 @@ public class SlimeController : MonoBehaviour
                 Speed = 7f;
             }
         }
-        else if (currentStamina < 0.40f)
+        else if (currentStamina < 0.40f )
         {
             staminaBarShift.value = currentStamina;
             Speed = 7f;
+            isSprinting = false;
         }
 
         if(key == 1)
@@ -289,17 +284,6 @@ public class SlimeController : MonoBehaviour
             backgroundMusic.Pause();
             oceanMusic.Pause();
             loseMenu.SetActive(true);
-        }
-
-        if (key ==1 && key2 == 1 && key3 == 1 && key4 == 1 && key5 == 1)
-        {
-            SlimeController cc = GetComponent<SlimeController>();
-            cc.enabled = false;
-            WinningSong = true;
-            Audio.SetActive(false);
-            WinningMusic.Play();
-            winMenu.SetActive(true);
-            Time.timeScale = 0f;
         }
         if (health == 0)
         {
@@ -486,6 +470,7 @@ public class SlimeController : MonoBehaviour
             }
             if (collision.gameObject.tag == "Spikes")
             {
+            rb.isKinematic = true;
             gameObject.GetComponent<Renderer>().enabled = false;
             animator.SetTrigger("isDead");
             dustCloud.SetActive(false);
@@ -501,18 +486,22 @@ public class SlimeController : MonoBehaviour
             Transition.SetActive(false);
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = true;
+            dustCloud.SetActive(true);
+            isDashing = false;
         }
         }
         IEnumerator WaitforDeath()
     {
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1.2f);
+        rb.isKinematic = false;
         currentStamina = maxStamina;
         staminaBarShift.value = currentStamina;
         gameObject.GetComponent<Renderer>().enabled = true;
         Transition.SetActive(true);
         PlaySound(transitionSound);
-        dustCloud.SetActive(true);
+        isDashing = true;
+        dashIcon.SetActive(true);
         transform.position = spawnPoint.transform.position;
         if(health == 0 )
             {
@@ -530,16 +519,38 @@ public class SlimeController : MonoBehaviour
         }
         if(collision.gameObject.tag == "Death")
         {
-            animator.SetTrigger("isDead");
+            rb.isKinematic = true;
             gameObject.GetComponent<Renderer>().enabled = false;
+            animator.SetTrigger("isDead");
+            dustCloud.SetActive(false);
             particlesDeath.Play();
-            Particles.Stop();
-            health -= 1;
-            Speed = 0;
-            PlaySound(hurtClip);
             SlimeController cc = GetComponent<SlimeController>();
             cc.enabled = false;
+            health -= 1;
+            PlaySound(hurtClip);
             StartCoroutine("WaitforDeath");
+        }
+        if (collision.gameObject.tag == "ExitDoor")
+        {
+            if (key == 1 && key2 == 1 && key3 == 1 && key4 == 1 && key5 == 1)
+            {
+                SlimeController cc = GetComponent<SlimeController>();
+                cc.enabled = false;
+                rb.velocity = Vector2.zero;
+                Speed = 0;
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isIdle", true);
+                endingTransition.SetActive(true);
+                PlaySound(transitionSound);
+                dustCloud.SetActive(false);
+                rainMusic.Pause();
+                backgroundMusic.Pause();
+                StartCoroutine("SceneTransition");
+            }
+            else
+            {
+                exitTip.text = "You Need More Strength to Advance";
+            }
         }
     }
     void OnCollisionExit2D(Collision2D collision)
@@ -549,6 +560,16 @@ public class SlimeController : MonoBehaviour
             isGrounded = false;
             coroutineAllowed = false;
         }
+        if(collision.gameObject.tag == "ExitDoor")
+        {
+            exitTip.text = "";
+        }
+    }
+
+    IEnumerator SceneTransition()
+    {
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     IEnumerator SpawnCloud()
     {

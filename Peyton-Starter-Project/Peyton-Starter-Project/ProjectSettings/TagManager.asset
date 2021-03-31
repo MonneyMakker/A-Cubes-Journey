@@ -16,6 +16,7 @@ TagManager:
   - keys3
   - keys4
   - keys5
+  - ExitDoor
   layers:
   - Default
   - TransparentFX
