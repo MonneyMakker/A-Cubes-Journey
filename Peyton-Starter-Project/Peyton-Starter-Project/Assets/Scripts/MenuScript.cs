@@ -11,10 +11,16 @@ public class MenuScript : MonoBehaviour
 
     }
 
-    public void SwitchScene(string SampleScene)
-{
-        SceneManager.LoadScene("SampleScene");
+    public void SwitchScene(string GrayScaleWorld)
+    {
+        SceneManager.LoadSceneAsync("GrayScaleWorld");
     }
+    public void quitgame()
+    {
+        Application.Quit();
+        Debug.Log("Quit");
+    }
+
     // Update is called once per frame
     void Update()
     {

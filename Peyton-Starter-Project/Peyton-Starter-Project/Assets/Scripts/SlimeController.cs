@@ -34,20 +34,14 @@ public class SlimeController : MonoBehaviour
     public float cooldownTime = 1.5f;
     private float nextFireTime = 0;
     float DashDirection;
-    public Transform firePoint;
     public Transform particlePoint;
     public Transform jumpPoint;
     public Transform spawnPoint;
-    public GameObject bullet;
     public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition, keys1, keys2, keys3, keys4, keys5, 
     endingTransition;
     public ParticleSystem Particles;
     public ParticleSystem particlesJump;
     public ParticleSystem particlesDeath;
-    public int maxAmmo = 10;
-    public int ammo;
-    public bool isFiring;
-    public Text ammoDisplay;
     public GameObject dustCloud;
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
@@ -63,7 +57,6 @@ public class SlimeController : MonoBehaviour
         health = 5;
         audioSource = GetComponent<AudioSource>();
         facingRight = true;
-        ammo = maxAmmo;
         currentStamina = maxStamina;
         staminaBarShift.maxValue = maxStamina;
         staminaBarShift.value = maxStamina;
@@ -109,7 +102,6 @@ public class SlimeController : MonoBehaviour
             Vector2 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
-            firePoint.Rotate(0, 180f, 0);
             particlePoint.Rotate(0, 180f, 0);
             jumpPoint.Rotate(0, 180f, 0);
         }
@@ -333,16 +325,6 @@ public class SlimeController : MonoBehaviour
             heart2.SetActive(true);
             heart1.SetActive(true);
         }
-        if (Input.GetMouseButtonDown(2) && !isFiring && ammo > 0)
-        {
-            Instantiate(bullet, firePoint.position, firePoint.rotation);
-            PlaySound(shootingClip);
-            Debug.Log("Firing");
-            isFiring = true;
-            ammo--;
-            isFiring = false;
-            ammoDisplay.text = ammo.ToString();
-        }
     }
     public void UseStamina(float amount)
     {
@@ -408,17 +390,8 @@ public class SlimeController : MonoBehaviour
         particlesJump.Play();
         isGrounded = false;
     }
-
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-            if (collision.gameObject.tag == "Ammo")
-            {
-                ammo = maxAmmo;
-                Destroy(collision.gameObject);
-                ammoDisplay.text = ammo.ToString();
-                PlaySound(coinClip);
-            }
             if (collision.gameObject.tag == "Health")
             {
             if (health < 5)
