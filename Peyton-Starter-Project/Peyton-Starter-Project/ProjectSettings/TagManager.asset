@@ -17,6 +17,7 @@ TagManager:
   - keys4
   - keys5
   - ExitDoor
+  - Trampoline
   layers:
   - Default
   - TransparentFX
