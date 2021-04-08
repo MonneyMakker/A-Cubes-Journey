@@ -18,6 +18,8 @@ TagManager:
   - keys5
   - ExitDoor
   - Trampoline
+  - PinkSpikes
+  - CheckPoint
   layers:
   - Default
   - TransparentFX

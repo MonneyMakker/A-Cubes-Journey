@@ -14,9 +14,9 @@ public class SlimeController : MonoBehaviour
     [SerializeField] float currentStamina;
     private Coroutine regen;
     AudioSource audioSource;
-    public AudioClip coinClip, hurtClip, healthClip, jumpSound, transitionSound, dashSound, shootingClip, launchClip, crunchClip;
+    public AudioClip coinClip, hurtClip, healthClip, jumpSound, transitionSound, dashSound, launchClip, crunchClip, checkPointClip;
     public AudioSource moving;
-    public AudioSource backgroundMusic, oceanMusic, rainMusic;
+    public AudioSource backgroundMusic, rainMusic;
     public GameObject loseMenu;
     Rigidbody2D rb;
     public float Speed;
@@ -36,11 +36,16 @@ public class SlimeController : MonoBehaviour
     public Transform particlePoint;
     public Transform jumpPoint;
     public Transform spawnPoint;
+    public Transform checkPoint;
+    public GameObject normalFlag;
+    public GameObject touchedFlag;
+    Vector3 respawnPoint;
     public GameObject heart1, heart2, heart3, heart4, heart5, dashIcon, JumpIcon, Transition, keys1, keys2, keys3, keys4, keys5, 
     endingTransition;
     public ParticleSystem Particles;
     public ParticleSystem particlesJump;
     public ParticleSystem particlesDeath;
+    public ParticleSystem checkPointFlag;
     public GameObject dustCloud;
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
@@ -49,7 +54,6 @@ public class SlimeController : MonoBehaviour
     bool Dashing;
     private Animator animator;
     bool isSprinting;
-    public TMP_Text exitTip;
      public GameObject exitdialogBox1;
     public TMP_Text exitdialog1Text;
     public GameObject exitdialogBox2;
@@ -75,7 +79,8 @@ public class SlimeController : MonoBehaviour
         key3 = 0;
         key4 = 0;
         key5 = 0;
-        exitTip.text = "";
+        normalFlag.SetActive(true);
+        respawnPoint = spawnPoint.transform.position;
     }
         public void PlaySound(AudioClip clip)
     {
@@ -278,7 +283,6 @@ public class SlimeController : MonoBehaviour
             cc.enabled = false;
             Time.timeScale = 0;
             backgroundMusic.Pause();
-            oceanMusic.Pause();
             loseMenu.SetActive(true);
         }
         if (health == 0)
@@ -466,7 +470,29 @@ public class SlimeController : MonoBehaviour
                 Destroy(collision.gameObject);
                 }
             }
+            if(collision.gameObject.tag == "CheckPoint")
+            {
+            PlaySound(checkPointClip);
+            checkPointFlag.Play();
+            respawnPoint = checkPoint.transform.position;
+            normalFlag.SetActive(false);
+            touchedFlag.SetActive(true);
+        }
             if (collision.gameObject.tag == "Spikes")
+            {
+            rb.isKinematic = true;
+            gameObject.GetComponent<Renderer>().enabled = false;
+            animator.SetTrigger("isDead");
+            dustCloud.SetActive(false);
+            particlesDeath.Play();
+            SlimeController cc = GetComponent<SlimeController>();
+            cc.enabled = false;
+            health -= 1;
+            PlaySound(hurtClip);
+            StartCoroutine("WaitforDeath");
+            }
+
+            if (collision.gameObject.tag == "PinkSpikes")
             {
             rb.isKinematic = true;
             gameObject.GetComponent<Renderer>().enabled = false;
@@ -487,7 +513,7 @@ public class SlimeController : MonoBehaviour
             dustCloud.SetActive(true);
             isDashing = false;
         }
-        }
+    }
         IEnumerator WaitforDeath()
     {
         rb.velocity = Vector2.zero;
@@ -500,7 +526,7 @@ public class SlimeController : MonoBehaviour
         PlaySound(transitionSound);
         isDashing = true;
         dashIcon.SetActive(true);
-        transform.position = spawnPoint.transform.position;
+        transform.position = respawnPoint;
         if(health == 0 )
             {
             loseMenu.SetActive(true);
