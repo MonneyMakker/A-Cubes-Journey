@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/RedWorld.unity
     guid: 32b98c96d1ce4054ea45854ed8c4ec7c
   - enabled: 1
+    path: Assets/Scenes/OrangeWorld.unity
+    guid: 49404ac0e1dcaf64a96958a0b81e42ba
+  - enabled: 1
     path: Assets/Scenes/FullColorWorld.unity
     guid: b09ac46e91164734f81bb4012f997d04
   m_configObjects: {}

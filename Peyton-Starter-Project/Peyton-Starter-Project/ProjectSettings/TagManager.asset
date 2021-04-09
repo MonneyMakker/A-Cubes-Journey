@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - ground
-  - Ammo
-  - Coins
   - Death
   - Spikes
   - Health
@@ -20,6 +18,9 @@ TagManager:
   - Trampoline
   - PinkSpikes
   - CheckPoint
+  - pos1
+  - pos2
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

@@ -541,6 +541,11 @@ public class SlimeController : MonoBehaviour
              Instantiate(dustCloud, jumpPoint.transform.position, dustCloud.transform.rotation);
              coroutineAllowed = true;
         }
+        if(collision.gameObject.tag == "MovingPlatform")
+        {
+            gameObject.transform.parent = collision.gameObject.transform;
+            isGrounded = true;
+        }
         if(collision.gameObject.tag == "Death")
         {
             rb.isKinematic = true;
@@ -595,6 +600,10 @@ public class SlimeController : MonoBehaviour
         if(collision.gameObject.tag == "ExitDoor")
         {
             exitdialogBox1.SetActive(false);
+        }
+         if(collision.gameObject.tag == "MovingPlatform")
+        {
+            gameObject.transform.parent = null;
         }
     }
 
