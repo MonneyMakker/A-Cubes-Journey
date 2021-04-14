@@ -14,7 +14,7 @@ public class SlimeController : MonoBehaviour
     [SerializeField] float currentStamina;
     private Coroutine regen;
     AudioSource audioSource;
-    public AudioClip coinClip, hurtClip, healthClip, jumpSound, transitionSound, dashSound, launchClip, crunchClip, checkPointClip;
+    public AudioClip hurtClip, healthClip, jumpSound, transitionSound, dashSound, launchClip, crunchClip, checkPointClip, chatSound;
     public AudioSource moving;
     public AudioSource backgroundMusic, rainMusic;
     public GameObject loseMenu;
@@ -36,6 +36,8 @@ public class SlimeController : MonoBehaviour
     public Transform particlePoint;
     public Transform jumpPoint;
     public Transform spawnPoint;
+    public GameObject chatBubble;
+    public Transform chatBubbleFlip;
     public Transform checkPoint;
     public GameObject normalFlag;
     public GameObject touchedFlag;
@@ -47,6 +49,7 @@ public class SlimeController : MonoBehaviour
     public ParticleSystem particlesDeath;
     public ParticleSystem checkPointFlag;
     public GameObject dustCloud;
+    public GameObject roadBlock;
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
     public Camera mainCamera;
@@ -113,6 +116,7 @@ public class SlimeController : MonoBehaviour
             transform.localScale = theScale;
             particlePoint.Rotate(0, 180f, 0);
             jumpPoint.Rotate(0, 180f, 0);
+            chatBubbleFlip.Rotate(0, 180f, 0);
         }
     }
     void Update()
@@ -399,7 +403,7 @@ public class SlimeController : MonoBehaviour
         particlesJump.Play();
         isGrounded = false;
     }
-      public void LoadNextScene(string RedWorld)
+      public void LoadNextScene(int SceneIndex)
     {
         backgroundMusic.Pause();
         endingTransition.SetActive(true);
@@ -412,7 +416,7 @@ public class SlimeController : MonoBehaviour
                 SlimeController cc = GetComponent<SlimeController>();
                 cc.enabled = true;
                 PlaySound(signSound);
-                dustCloud.SetActive(true);
+                isGrounded = true;
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -491,7 +495,6 @@ public class SlimeController : MonoBehaviour
             PlaySound(hurtClip);
             StartCoroutine("WaitforDeath");
             }
-
             if (collision.gameObject.tag == "PinkSpikes")
             {
             rb.isKinematic = true;
@@ -546,6 +549,12 @@ public class SlimeController : MonoBehaviour
             gameObject.transform.parent = collision.gameObject.transform;
             isGrounded = true;
         }
+            if(collision.gameObject.tag == "RoadBlock")
+        {
+            chatBubble.SetActive(true);
+            PlaySound(chatSound);
+            Invoke("DisableChat", 2.2f);
+        }
         if(collision.gameObject.tag == "Death")
         {
             rb.isKinematic = true;
@@ -569,8 +578,7 @@ public class SlimeController : MonoBehaviour
                 cc.enabled = false;
                 PlaySound(signSound);
                 rb.velocity = Vector2.zero;
-                rb.isKinematic = false;
-                dustCloud.SetActive(false);
+                isGrounded = false;
                 animator.SetBool("isIdle", true);
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isShifting", false);
@@ -605,6 +613,10 @@ public class SlimeController : MonoBehaviour
         {
             gameObject.transform.parent = null;
         }
+    }
+    void DisableChat()
+    {
+        chatBubble.SetActive(false);
     }
 
     IEnumerator SceneTransition()

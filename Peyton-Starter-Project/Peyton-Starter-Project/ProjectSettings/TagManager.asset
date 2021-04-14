@@ -21,6 +21,9 @@ TagManager:
   - pos1
   - pos2
   - MovingPlatform
+  - CheckPoint2
+  - NPC
+  - RoadBlock
   layers:
   - Default
   - TransparentFX

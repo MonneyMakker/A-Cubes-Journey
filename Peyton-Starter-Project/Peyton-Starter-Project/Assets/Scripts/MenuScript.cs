@@ -21,6 +21,11 @@ public class MenuScript : MonoBehaviour
         Debug.Log("Quit");
     }
 
+    public void LoadLevel(int SceneIndex)
+    {
+        SceneManager.LoadScene(SceneIndex);
+    }
+
     // Update is called once per frame
     void Update()
     {
