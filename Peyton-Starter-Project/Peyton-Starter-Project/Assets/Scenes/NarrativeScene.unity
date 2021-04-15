@@ -463,7 +463,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 479, y: -1579}
+  m_AnchoredPosition: {x: 479, y: -1598}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &728899737
@@ -504,15 +504,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "For Those Who Happen To Find This Letter\n\nI Just Can't do it Anymore!
-    After getting laid off work last week, and the months and months of stress and
-    depression that has turned my world black and white, I've decided I have no purpose
-    in this world and that its time for me to leave this world. \nAfter a few failed
-    attempts at slitting my wrists and not having a garage with a car to do the job...I
-    have decided that tonight while its raining that I will go to the lake, jump in
-    with my ankle weights on, and swim as far as I can down, and just let go!\nTo
-    my mom and dad looking down in Heaven, i'm sorry I disappointed you but I just
-    can't do it anymore without you! Hopefully you will understand when I see you
-    again!\n\n\n\n\n\n\n\nGoodBye!\n\n\n\n\n\n\n\n"
+    After getting laid off work last week from my job at Blackrock Industries, and
+    the months and months of stress and depression that has turned my world black
+    and white, I've decided I have no purpose in this world and that its time for
+    me to leave this world. \nAfter a few failed attempts at slitting my wrists and
+    not having a garage with a car to do the job...I have decided that tonight while
+    its raining that I will go to the lake, jump in with my ankle weights on, and
+    swim as far as I can down, and just let go!\nTo my mom and dad looking down in
+    Heaven, i'm sorry I disappointed you but I just can't do it anymore without you!
+    Hopefully you will understand when I see you again!\n\n\n\n\n\n\n\nGoodBye!\n\n\n\n\n\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59432aafc4b6aef4d87845f697e676a6, type: 2}
   m_sharedMaterial: {fileID: -3535425198024803617, guid: 59432aafc4b6aef4d87845f697e676a6,
@@ -582,12 +582,12 @@ MonoBehaviour:
   m_margin: {x: -1094.5342, y: 0, z: -173.07983, w: -18.073334}
   m_textInfo:
     textComponent: {fileID: 728899738}
-    characterCount: 741
+    characterCount: 777
     spriteCount: 0
-    spaceCount: 160
-    wordCount: 145
+    spaceCount: 166
+    wordCount: 151
     linkCount: 0
-    lineCount: 28
+    lineCount: 29
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e771c9f53c664b4ea824df7878f68a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wait_Time: 37
+  wait_Time: 42
 --- !u!1 &1529145146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,9 +1123,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 375b39aa312bd7842950de9a3747f62d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 99311f78f14049c4bbed91f266f42c11, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

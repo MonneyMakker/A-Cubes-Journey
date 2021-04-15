@@ -12,7 +12,9 @@ public class NPC : MonoBehaviour
     public bool playerInRange;
     public AudioSource audioSource;
     public AudioClip signSound;
+    public Rigidbody2D rb;
     public AudioSource backgroundMusic;
+    public AudioSource npcMusic;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,7 @@ public class NPC : MonoBehaviour
                 dialogBox.SetActive(false);
                 PlaySound(signSound);
                 backgroundMusic.Play();
+                npcMusic.Stop();
             }
             else
             {
@@ -44,6 +47,7 @@ public class NPC : MonoBehaviour
                 rButton.SetActive(false);
                 PlaySound(signSound);
                 backgroundMusic.Pause();
+                npcMusic.Play();
             }
         }
     }
@@ -65,7 +69,6 @@ public class NPC : MonoBehaviour
             dialogBox.SetActive(false);
             chatBubble.SetActive(true);
             rButton.SetActive(false);
-            backgroundMusic.Play();
         }
     }
 }

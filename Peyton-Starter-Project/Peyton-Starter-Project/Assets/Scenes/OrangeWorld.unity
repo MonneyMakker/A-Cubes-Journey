@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167716186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3039,7 +3039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0.050002098, y: 1.01, z: 0}
-  m_LookaheadTime: 0.5
+  m_LookaheadTime: 1
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 1
   m_XDamping: 3
@@ -3127,10 +3127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 241390500}
-  player: {fileID: 700345119}
   pause: {fileID: 63260392}
   audioSource: {fileID: 1157305712}
   pauseMusic: {fileID: 182522242}
+  player: {fileID: 700345119}
 --- !u!114 &236255775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3354,7 +3354,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3378,7 +3378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241744047}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.14, y: 132.142, z: -10}
+  m_LocalPosition: {x: 73.14, y: 132.112, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4680,7 +4680,7 @@ MonoBehaviour:
   m_Follow: {fileID: 700345121}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 7.5
     NearClipPlane: 0.001
     FarClipPlane: 1000
     Dutch: 0
@@ -4704,7 +4704,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321546636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.14, y: 132.142, z: -10}
+  m_LocalPosition: {x: 73.14, y: 132.112, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 227437608}
@@ -41243,7 +41243,7 @@ MonoBehaviour:
   staminaBarShift: {fileID: 492955189}
   maxStamina: 100
   currentStamina: 0
-  coinClip: {fileID: 8300000, guid: 7d467363463235d4fbdd71826b48d1ee, type: 3}
+  dialogBox: {fileID: 0}
   hurtClip: {fileID: 8300000, guid: 5dbec1714e2240a4c8ab24bc483f77a8, type: 3}
   healthClip: {fileID: 8300000, guid: 81bb4a88a763b1f48904cc2040eac7c0, type: 3}
   jumpSound: {fileID: 8300000, guid: bac445330ce584e4eac262b4a85aada1, type: 3}
@@ -41252,6 +41252,7 @@ MonoBehaviour:
   launchClip: {fileID: 8300000, guid: 6f9e437a96e59754faf21015621b9cca, type: 3}
   crunchClip: {fileID: 8300000, guid: 9b2876931a9e7e942968167499a37b3e, type: 3}
   checkPointClip: {fileID: 8300000, guid: 600dffd9d0492184085e7f4cc27e169c, type: 3}
+  chatSound: {fileID: 0}
   moving: {fileID: 700345122}
   backgroundMusic: {fileID: 1157305712}
   rainMusic: {fileID: 0}
@@ -41260,12 +41261,18 @@ MonoBehaviour:
   JumpForce: 750
   DashForce: 20
   StartDashTimer: 0.3
+  isTalking: 0
   launchForce: 32
   cooldownTime: 1.5
   particlePoint: {fileID: 1618773673}
   jumpPoint: {fileID: 1714411566}
   spawnPoint: {fileID: 1178089707}
   chatBubble: {fileID: 1917118450}
+  chatBubble1: {fileID: 0}
+  chatBubble2: {fileID: 0}
+  chatBubble3: {fileID: 0}
+  chatBubble4: {fileID: 0}
+  chatBubble5: {fileID: 0}
   chatBubbleFlip: {fileID: 1917118451}
   checkPoint: {fileID: 820609710}
   normalFlag: {fileID: 1089739550}
@@ -41290,7 +41297,6 @@ MonoBehaviour:
   checkPointFlag: {fileID: 361361987}
   dustCloud: {fileID: 8067695746794357520, guid: a373efa0c8caf4c4984df11fe682e5cc,
     type: 3}
-  roadBlock: {fileID: 1917118450}
   shakeMagnitude: 0.12
   shakeTime: 0.4
   mainCamera: {fileID: 241744050}
@@ -66208,9 +66214,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3cc23a7e41f6a2547a289c9301f4d2c2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: faea63aafb2e36f469dedfd855e0f27f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -67604,7 +67610,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213784744}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -76917,7 +76923,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492773358}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

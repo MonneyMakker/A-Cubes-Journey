@@ -24,6 +24,14 @@ TagManager:
   - CheckPoint2
   - NPC
   - RoadBlock
+  - ChatTrigger1
+  - ChatTrigger2
+  - ChatTrigger3
+  - ChatTrigger4
+  - ChatTrigger5
+  - ChatTrigger6
+  - ChatTrigger7
+  - ChatTrigger8
   layers:
   - Default
   - TransparentFX
