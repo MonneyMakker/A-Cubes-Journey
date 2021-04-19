@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TogglePlatform : MonoBehaviour
 {
-    [SerializeField] GameObject[] platforms;
+    public GameObject[] platforms;
     int numberOfPlatforms;
     int toggleTime;
-    [SerializeField] float cycleTime;
+    public float cycleTime;
 
     // Start is called before the first frame update
     void Start()

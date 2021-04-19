@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
-[SerializeField] private Image progressBar;
+public Image progressBar;
 
      private IEnumerator Start()
     {

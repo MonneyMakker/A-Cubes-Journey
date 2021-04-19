@@ -36,6 +36,12 @@ EditorBuildSettings:
     path: Assets/Scenes/YellowWorld.unity
     guid: 6dc81f5fa05f83846829ee915ad76ebf
   - enabled: 1
-    path: Assets/Scenes/FullColorWorld.unity
-    guid: b09ac46e91164734f81bb4012f997d04
+    path: Assets/Scenes/LoadingScreen5.unity
+    guid: e1126163f88bb814c8f80706fed94e5e
+  - enabled: 1
+    path: Assets/Scenes/GreenWorld.unity
+    guid: 0460ba33099cd2d44955bc41b54f327c
+  - enabled: 1
+    path: Assets/Scenes/EndingScene.unity
+    guid: 5e370b2f5849c464e88ea4b4a331956e
   m_configObjects: {}

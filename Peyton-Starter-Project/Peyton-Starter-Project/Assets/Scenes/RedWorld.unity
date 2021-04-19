@@ -1488,7 +1488,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You need to collect all the fruits in this section to continue up the mountain.
+  m_text: You need to collect all the fruit to continue up Rainbow Mountain.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -2916,7 +2916,6 @@ MonoBehaviour:
   crunchClip: {fileID: 8300000, guid: 9b2876931a9e7e942968167499a37b3e, type: 3}
   checkPointClip: {fileID: 8300000, guid: 600dffd9d0492184085e7f4cc27e169c, type: 3}
   chatSound: {fileID: 8300000, guid: 1271826376063174cbd5ffc373d849f1, type: 3}
-  moving: {fileID: 259727406}
   backgroundMusic: {fileID: 158048388}
   rainMusic: {fileID: 0}
   loseMenu: {fileID: 1610533157}
@@ -13323,17 +13322,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449885171}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2099531, y: 1.1626301, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.25}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &449885173
 CanvasRenderer:
@@ -14336,7 +14335,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Do you wish to continue up Rainbow Mountain?
+  m_text: Are you ready to continue?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -21062,7 +21061,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Nice job getting to the checkpoint! Make sure you're collecting those fruits!
-    You will need all five to continue the journey. - Old Cube
+    You will need all five to continue the journey. - Old Man
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -22841,17 +22840,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765696542}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2099531, y: 1.1626301, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.253}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &765696544
 CanvasRenderer:
@@ -23483,17 +23482,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819553574}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4674311, y: 1.3385359, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.284}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &819553576
 CanvasRenderer:
@@ -23982,17 +23981,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848809648}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2099531, y: 1.1626301, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.251}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &848809650
 CanvasRenderer:
@@ -24789,7 +24788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924753945}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.74, y: 91.28, z: 0}
+  m_LocalPosition: {x: 18.74, y: 89, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 353672844}
@@ -38645,17 +38644,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273801880}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2099531, y: 1.1626301, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.25}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1273801882
 CanvasRenderer:
@@ -38953,17 +38952,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298021596}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2001, y: 1.1016, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.236}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1298021598
 CanvasRenderer:
@@ -108218,17 +108217,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1422262167}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2099531, y: 1.1626301, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.247}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1422262169
 CanvasRenderer:
@@ -110564,7 +110563,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572973803}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.92, y: 3.79, z: 0}
+  m_LocalPosition: {x: -35.92, y: 3.6, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 353672844}
@@ -110804,17 +110803,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585563649}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6693496, y: 1.413247, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1367318696}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.3}
-  m_SizeDelta: {x: 2.41, y: 0.61}
+  m_AnchoredPosition: {x: 0, y: 0.307}
+  m_SizeDelta: {x: 1, y: 0.5625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1585563651
 CanvasRenderer:
@@ -110867,7 +110866,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 0.5625}
+  m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

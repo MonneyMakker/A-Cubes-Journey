@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     private Coroutine regen;
     AudioSource audioSource;
     public AudioClip jumpSound, transitionSound, dashSound;
-    public AudioSource moving;
     public AudioSource backgroundMusic, oceanMusic;
     Rigidbody2D rb;
     public float Speed;
@@ -39,7 +38,6 @@ public class PlayerController : MonoBehaviour
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
     public Camera mainCamera;
-    bool isMoving;
     bool Dashing;
     private Animator animator;
     bool isSprinting;
@@ -88,16 +86,7 @@ public class PlayerController : MonoBehaviour
             doubleJumpAllowed = true;
             JumpIcon.SetActive(true);
             }
-            if (rb.velocity.x !=0)
-            isMoving = true;
-            else isMoving = false;
-            if (isMoving && isGrounded)
-            {
-                if(!moving.isPlaying)
-                moving.Play();
-            }
-            else 
-                moving.Stop();
+           
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             Jump();

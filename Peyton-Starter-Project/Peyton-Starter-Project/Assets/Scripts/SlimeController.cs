@@ -17,7 +17,6 @@ public class SlimeController : MonoBehaviour
     private Coroutine regen;
     AudioSource audioSource;
     public AudioClip hurtClip, healthClip, jumpSound, transitionSound, dashSound, launchClip, crunchClip, checkPointClip, chatSound;
-    public AudioSource moving;
     public AudioSource backgroundMusic, rainMusic;
     public GameObject loseMenu;
     Rigidbody2D rb;
@@ -55,7 +54,6 @@ public class SlimeController : MonoBehaviour
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
     public Camera mainCamera;
-    bool isMoving;
     bool Dashing;
     private Animator animator;
     bool isSprinting;
@@ -135,16 +133,7 @@ public class SlimeController : MonoBehaviour
             doubleJumpAllowed = true;
             JumpIcon.SetActive(true);
             }
-            if (rb.velocity.x !=0)
-            isMoving = true;
-            else isMoving = false;
-            if (isMoving && isGrounded)
-            {
-                if(!moving.isPlaying)
-                moving.Play();
-            }
-            else 
-                moving.Stop();
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && isTalking == false)
         {
             Jump();
@@ -204,7 +193,7 @@ public class SlimeController : MonoBehaviour
         else
             animator.SetBool("isDoubleJumping", false);
 
-        if (Time.time > nextFireTime)
+        if (Time.time > nextFireTime && isTalking == false)
         {
             if (Input.GetMouseButtonDown(1) && movX != 0 && isDashing == false)
             {
@@ -213,7 +202,6 @@ public class SlimeController : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 DashDirection = movX;
                 Particles.Play();
-                Debug.Log("ability used");
                 audioSource.clip = dashSound;
                 audioSource.Play();
                 dashIcon.SetActive(false);

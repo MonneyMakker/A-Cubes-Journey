@@ -459,7 +459,7 @@ RectTransform:
   m_Children:
   - {fileID: 1779662595}
   m_Father: {fileID: 886009066}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -503,16 +503,40 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "For Those Who Happen To Find This Letter\n\nI Just Can't do it Anymore!
-    After getting laid off work last week from my job at Blackrock Industries, and
-    the months and months of stress and depression that has turned my world black
-    and white, I've decided I have no purpose in this world and that its time for
-    me to leave this world. \nAfter a few failed attempts at slitting my wrists and
-    not having a garage with a car to do the job...I have decided that tonight while
-    its raining that I will go to the lake, jump in with my ankle weights on, and
-    swim as far as I can down, and just let go!\nTo my mom and dad looking down in
-    Heaven, i'm sorry I disappointed you but I just can't do it anymore without you!
-    Hopefully you will understand when I see you again!\n\n\n\n\n\n\n\nGoodBye!\n\n\n\n\n\n\n\n"
+  m_text: 'To Those Who Happen To Find This Letter
+
+
+    I Just Can''t do it Anymore! After getting laid off work last week from my job
+    at Blackrock Industries, and the months and months of stress and depression that
+    has turned my world black and white, I have decided that I have no purpose anymore
+    and that It''s best that I leave this world.
+
+    After a few failed attempts at killing myself, which is something I can''t even
+    do right! I have decided that tonight while its raining, I will do something I
+    know I won''t fail at...I will drown myself in the lake using my weights and swimming
+    as far as I can down. I don''t care about the pain, I just want it to be over!
+
+    To my mom and dad looking down in Heaven, i''m sorry I disappointed you but I
+    just can''t do it anymore without you! Hopefully you will understand when I see
+    you again!
+
+
+
+
+
+
+
+
+    GoodBye!
+
+
+
+
+
+
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 59432aafc4b6aef4d87845f697e676a6, type: 2}
   m_sharedMaterial: {fileID: -3535425198024803617, guid: 59432aafc4b6aef4d87845f697e676a6,
@@ -558,7 +582,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 41
+  m_firstOverflowCharacterIndex: 40
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -582,12 +606,12 @@ MonoBehaviour:
   m_margin: {x: -1094.5342, y: 0, z: -173.07983, w: -18.073334}
   m_textInfo:
     textComponent: {fileID: 728899738}
-    characterCount: 777
+    characterCount: 838
     spriteCount: 0
-    spaceCount: 166
-    wordCount: 151
+    spaceCount: 174
+    wordCount: 160
     linkCount: 0
-    lineCount: 29
+    lineCount: 30
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -653,6 +677,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 99302891}
+  - {fileID: 1212780021}
   - {fileID: 728899736}
   m_Father: {fileID: 1294778995}
   m_RootOrder: 0
@@ -740,6 +765,145 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1212780020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212780021}
+  - component: {fileID: 1212780024}
+  - component: {fileID: 1212780023}
+  - component: {fileID: 1212780022}
+  m_Layer: 5
+  m_Name: Start Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1212780021
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212780020}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.9684172, y: 3.8198297, z: 1}
+  m_Children: []
+  m_Father: {fileID: 886009066}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 848, y: -489}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1212780022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212780020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
+    m_HighlightedColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
+    m_PressedColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+    m_SelectedColor: {r: 0.8980392, g: 0.8980392, b: 0.8980392, a: 1}
+    m_DisabledColor: {r: 0.8980392, g: 0.8980392, b: 0.8980392, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1212780023}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1294778991}
+        m_MethodName: LoadLevel
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 434488508}
+        m_MethodName: Play
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1212780023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212780020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c7e223d43b4730448ab687909081b49a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1212780024
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212780020}
+  m_CullTransparentMesh: 0
 --- !u!1 &1294778990
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e771c9f53c664b4ea824df7878f68a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wait_Time: 42
+  wait_Time: 50
 --- !u!1 &1529145146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1287,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 99311f78f14049c4bbed91f266f42c11, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 375b39aa312bd7842950de9a3747f62d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1

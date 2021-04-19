@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class NarrativeWait : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float wait_Time = 42f;
+    public float wait_Time = 50f;
     void Start()
     {
         StartCoroutine(Wait());

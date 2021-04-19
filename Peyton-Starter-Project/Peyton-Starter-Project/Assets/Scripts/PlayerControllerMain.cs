@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,10 +12,10 @@ public class PlayerControllerMain : MonoBehaviour
     public Slider staminaBarShift;
     public int maxStamina = 100;
     [SerializeField] float currentStamina;
+    public GameObject dialogBox;
     private Coroutine regen;
     AudioSource audioSource;
-    public AudioClip hurtClip, healthClip, jumpSound, transitionSound, dashSound, launchClip, crunchClip, checkPointClip;
-    public AudioSource moving;
+    public AudioClip hurtClip, healthClip, jumpSound, transitionSound, dashSound, launchClip, crunchClip, checkPointClip, chatSound;
     public AudioSource backgroundMusic, rainMusic;
     public GameObject loseMenu;
     Rigidbody2D rb;
@@ -28,6 +27,7 @@ public class PlayerControllerMain : MonoBehaviour
     public float StartDashTimer;
     float CurrentDashTimer;
     bool isDashing;
+    public bool isTalking;
     private bool facingRight;
     private bool jumpAllowed;
     public float launchForce;
@@ -37,6 +37,8 @@ public class PlayerControllerMain : MonoBehaviour
     public Transform particlePoint;
     public Transform jumpPoint;
     public Transform spawnPoint;
+    public GameObject chatBubble, chatBubble1, chatBubble2, chatBubble3, chatBubble4, chatBubble5, chatBubble6, chatBubble7, chatBubble8;
+    public Transform chatBubbleFlip;
     public Transform checkPoint, checkPoint2;
     public GameObject normalFlag, normalFlag2;
     public GameObject touchedFlag, touchedFlag2;
@@ -51,7 +53,6 @@ public class PlayerControllerMain : MonoBehaviour
     Vector3 cameraInitialPosition;
     public float shakeMagnitude = 0.10f, shakeTime = 0.4f;
     public Camera mainCamera;
-    bool isMoving;
     bool Dashing;
     private Animator animator;
     bool isSprinting;
@@ -81,8 +82,11 @@ public class PlayerControllerMain : MonoBehaviour
         key4 = 0;
         key5 = 0;
         normalFlag.SetActive(true);
+        normalFlag.SetActive(true);
         respawnPoint = spawnPoint.transform.position;
+        isTalking = false;
     }
+
         public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
@@ -114,6 +118,7 @@ public class PlayerControllerMain : MonoBehaviour
             transform.localScale = theScale;
             particlePoint.Rotate(0, 180f, 0);
             jumpPoint.Rotate(0, 180f, 0);
+            chatBubbleFlip.Rotate(0, 180f, 0);
         }
     }
     void Update()
@@ -128,21 +133,11 @@ public class PlayerControllerMain : MonoBehaviour
             doubleJumpAllowed = true;
             JumpIcon.SetActive(true);
             }
-            if (rb.velocity.x !=0)
-            isMoving = true;
-            else isMoving = false;
-            if (isMoving && isGrounded)
-            {
-                if(!moving.isPlaying)
-                moving.Play();
-            }
-            else 
-                moving.Stop();
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && isTalking == false)
         {
             Jump();
         }
-        else if (doubleJumpAllowed && Input.GetKeyDown(KeyCode.Space))
+        else if (doubleJumpAllowed && Input.GetKeyDown(KeyCode.Space) && isTalking == false)
         {
             DoubleJump();
             doubleJumpAllowed = false;
@@ -197,7 +192,7 @@ public class PlayerControllerMain : MonoBehaviour
         else
             animator.SetBool("isDoubleJumping", false);
 
-        if (Time.time > nextFireTime)
+        if (Time.time > nextFireTime && isTalking == false)
         {
             if (Input.GetMouseButtonDown(1) && movX != 0 && isDashing == false)
             {
@@ -206,7 +201,7 @@ public class PlayerControllerMain : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 DashDirection = movX;
                 Particles.Play();
-                Debug.Log("ability used");
+
                 audioSource.clip = dashSound;
                 audioSource.Play();
                 dashIcon.SetActive(false);
@@ -226,7 +221,7 @@ public class PlayerControllerMain : MonoBehaviour
 
             }
         }
-        if (currentStamina > 0.40f)
+        if (currentStamina > 0.40f && isTalking == false)
         {
             isSprinting = true;
             if (Input.GetKey(KeyCode.LeftShift) && isSprinting == true && movX != 0)
@@ -277,6 +272,27 @@ public class PlayerControllerMain : MonoBehaviour
         else
             keys5.SetActive(false);
         
+
+ if(Input.GetKeyDown(KeyCode.R) && isTalking)
+        {
+            if(dialogBox.activeInHierarchy)
+            {
+                dialogBox.SetActive(false);
+                rb.constraints = RigidbodyConstraints2D.None;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                isGrounded = true;
+                jumpAllowed = true;
+            }
+            else
+            {
+                dialogBox.SetActive(true); //Make DialogActive
+                rb.constraints = RigidbodyConstraints2D.FreezeAll; //Freeze Movement via Rigidbody2D
+                isGrounded = false; // NoParticles or Animations Active
+                jumpAllowed = false; // No Jump Animation
+                isSprinting = true;
+            } 
+        }
+    
         if (health == 0)
         {
             Debug.Log("You Have Died!");
@@ -400,8 +416,7 @@ public class PlayerControllerMain : MonoBehaviour
         particlesJump.Play();
         isGrounded = false;
     }
-      
-       public void LoadNextScene(int SceneIndex)
+      public void LoadNextScene(int SceneIndex)
     {
         backgroundMusic.Pause();
         endingTransition.SetActive(true);
@@ -418,6 +433,10 @@ public class PlayerControllerMain : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.gameObject.tag == "NPC")
+        {
+            isTalking = true;
+        }
             if (collision.gameObject.tag == "Health")
             {
             if (health < 5)
@@ -472,8 +491,8 @@ public class PlayerControllerMain : MonoBehaviour
                 Destroy(collision.gameObject);
                 }
             }
-        if (collision.gameObject.tag == "CheckPoint")
-        {
+            if(collision.gameObject.tag == "CheckPoint")
+            {
             PlaySound(checkPointClip);
             checkPointFlag.Play();
             respawnPoint = checkPoint.transform.position;
@@ -488,6 +507,62 @@ public class PlayerControllerMain : MonoBehaviour
             normalFlag2.SetActive(false);
             touchedFlag2.SetActive(true);
             }
+        if(collision.gameObject.tag == "ChatTrigger1")
+            {
+            chatBubble1.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat1", 5f);
+        }
+        if(collision.gameObject.tag == "ChatTrigger2")
+            {
+            chatBubble2.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat2", 5f);
+        }
+        if(collision.gameObject.tag == "ChatTrigger3")
+            {
+            chatBubble3.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat3", 5f);
+        }
+        if(collision.gameObject.tag == "ChatTrigger4")
+        {
+            chatBubble4.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat4", 5f);
+        }
+        if(collision.gameObject.tag == "ChatTrigger5")
+        {
+            chatBubble5.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat5", 5f);
+        }
+        if(collision.gameObject.tag == "ChatTrigger6")
+        {
+            chatBubble6.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat6", 5f);
+        }
+        if(collision.gameObject.tag == "ChatTrigger7")
+        {
+            chatBubble7.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat7", 5f);
+        }
+         if(collision.gameObject.tag == "ChatTrigger8")
+        {
+            chatBubble8.SetActive(true);
+            PlaySound(chatSound);
+            Destroy(collision.gameObject);
+            Invoke("DisableChat8", 6f);
+        }
             if (collision.gameObject.tag == "Spikes")
             {
             rb.isKinematic = true;
@@ -501,7 +576,6 @@ public class PlayerControllerMain : MonoBehaviour
             PlaySound(hurtClip);
             StartCoroutine("WaitforDeath");
             }
-
             if (collision.gameObject.tag == "PinkSpikes")
             {
             rb.isKinematic = true;
@@ -524,6 +598,15 @@ public class PlayerControllerMain : MonoBehaviour
             isDashing = false;
         }
     }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+          if(collision.gameObject.tag == "NPC")
+        {
+            isTalking = false;
+        }
+    }
+        
         IEnumerator WaitforDeath()
     {
         rb.velocity = Vector2.zero;
@@ -556,6 +639,12 @@ public class PlayerControllerMain : MonoBehaviour
             gameObject.transform.parent = collision.gameObject.transform;
             isGrounded = true;
         }
+            if(collision.gameObject.tag == "RoadBlock")
+        {
+            chatBubble.SetActive(true);
+            PlaySound(chatSound);
+            Invoke("DisableChat", 2.5f);
+        }
         if(collision.gameObject.tag == "Death")
         {
             rb.isKinematic = true;
@@ -579,11 +668,11 @@ public class PlayerControllerMain : MonoBehaviour
                 cc.enabled = false;
                 PlaySound(signSound);
                 rb.velocity = Vector2.zero;
-                rb.isKinematic = false;
                 isGrounded = false;
                 animator.SetBool("isIdle", true);
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isShifting", false);
+                animator.SetBool("isDashing", false);
 
             }
             else
@@ -615,6 +704,42 @@ public class PlayerControllerMain : MonoBehaviour
         {
             gameObject.transform.parent = null;
         }
+    }
+    void DisableChat()
+    {
+        chatBubble.SetActive(false);
+    }
+    void DisableChat1()
+    {
+        chatBubble1.SetActive(false);
+    }
+    void DisableChat2()
+    {
+        chatBubble2.SetActive(false);
+    }
+    void DisableChat3()
+    {
+        chatBubble3.SetActive(false);
+    }
+    void DisableChat4()
+    {
+        chatBubble4.SetActive(false);
+    }
+    void DisableChat5()
+    {
+        chatBubble5.SetActive(false);
+    }
+    void DisableChat6()
+    {
+        chatBubble6.SetActive(false);
+    }
+    void DisableChat7()
+    {
+        chatBubble7.SetActive(false);
+    }
+     void DisableChat8()
+    {
+        chatBubble8.SetActive(false);
     }
 
     IEnumerator SceneTransition()
