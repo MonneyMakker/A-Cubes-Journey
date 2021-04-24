@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - ground
+  - Death
+  - Spikes
+  - Health
+  - Transition
+  - keys
+  - keys2
+  - keys3
+  - keys4
+  - keys5
+  - ExitDoor
+  - Trampoline
+  - PinkSpikes
+  - CheckPoint
+  - pos1
+  - pos2
+  - MovingPlatform
+  - CheckPoint2
+  - NPC
+  - RoadBlock
+  - ChatTrigger1
+  - ChatTrigger2
+  - ChatTrigger3
+  - ChatTrigger4
+  - ChatTrigger5
+  - ChatTrigger6
+  - ChatTrigger7
+  - ChatTrigger8
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Background
+  - JumpingPlatforms
+  - Player
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
